@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">ShapeDrawerPrac</string>
+    <string name="buttonUndoText">Undo</string>
+    <string name="PickerLabelText">Click to change Colour</string>
+
+
+    //Picker activity strings
+    <string name="RedLabel">Red Mix:</string>
+    <string name="GreenLabel">Green Mix:</string>
+    <string name="BlueLabel">Blue Mix:</string>
+    <string name="PickHeading">Pick and confirm a color with the sliders</string>
+    <string name="GroupHeading">Choose a shape:</string>
+    <string name="shapeRectangle">Rectangle</string>
+    <string name="shapeEllipse">Ellipse</string>
+    <string name="shapeLine">Line</string>
+    <string name="buttonConfirm">Confirm</string>
+    <string name="buttonClearText">Clear</string>
+    <string name="checkFillText">Fill Shape</string>
+    <string name="radioCircle">Circle</string>
+    <string name="radioRectangle">Rectangle</string>
+    <string name="radioLine">Line</string>
+</resources>
