@@ -2,7 +2,7 @@ package s211245615.wrap302.sketchprac;
 
 import android.graphics.Paint;
 
-class DrawShape {
+class DrawShape{
     private float StartX, StartY, EndX, EndY;
     private Paint paint;
     private int ShapeType;
@@ -47,7 +47,6 @@ class DrawShape {
             this.paint.setStyle(Paint.Style.STROKE);
         }
     }
-
 }
 
 

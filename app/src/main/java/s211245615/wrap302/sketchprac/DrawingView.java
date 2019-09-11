@@ -18,6 +18,12 @@ public class DrawingView extends View implements GestureDetector.OnGestureListen
 
     int iColor;
     boolean isFilled = true;
+    int iShapeChoice; //Shape chosen 0 = ellipse, 1 = rectangle, 3 = line
+    float StartX, StartY, EndX, EndY; //Co-ordinates for touch gestures
+    Paint defaultPaint;
+
+    private ArrayList<DrawShape> drawShapes;
+    boolean isDrawing;
 
     public void setFilled(boolean filled) {
         isFilled = filled;
@@ -28,12 +34,14 @@ public class DrawingView extends View implements GestureDetector.OnGestureListen
         this.iShapeChoice = iShapeChoice;
     }
 
-    int iShapeChoice; //Shape chosen 0 = ellipse, 1 = rectangle, 3 = line
-    float StartX, StartY, EndX, EndY; //Co-ordinates for touch gestures
-    Paint defaultPaint;
-    private ArrayList<DrawShape> drawShapes;
-    boolean isDrawing;
-    int minSize;
+    public ArrayList<DrawShape> getDrawShapes() {
+        return drawShapes;
+    }
+
+    public void setDrawShapes(ArrayList<DrawShape> drawShapes) {
+        this.drawShapes = drawShapes;
+    }
+
 
     public DrawingView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -52,16 +60,19 @@ public class DrawingView extends View implements GestureDetector.OnGestureListen
     }
 
     public boolean onTouchEvent(MotionEvent event) {
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                StartX = event.getX();
-                StartY = event.getY();
+
+
+                StartX = event.getX() - this.getLeft();
+                StartY = event.getY() - this.getTop();
                 Log.d("Event down", StartX + " " + StartY);
                 isDrawing = true;
                 return true;
             case MotionEvent.ACTION_UP:
-                EndX = event.getX();
-                EndY = event.getY();
+                EndX = event.getX() - this.getLeft();
+                EndY = event.getY() - this.getTop();
                 Log.d("Event up", EndX + " " + EndY);
                 Paint paint = new Paint();
                 paint.setColor(iColor);
@@ -86,19 +97,16 @@ public class DrawingView extends View implements GestureDetector.OnGestureListen
         int min;
         if (w == 0)
             min = h;
+        else if (h == 0)
+            min = w;
         else
-            if (h == 0)
-                min = w;
-            else
-                min = Math.min(w, h);
+            min = Math.min(w, h);
         if (min != w) {
             this.getLayoutParams().height = min;
             this.getLayoutParams().width = min;
         }
     }
-    protected void setMinSize(int size){
-        minSize = size;
-    }
+
     @Override
     public boolean onDown(MotionEvent motionEvent) {
         return false;
@@ -121,7 +129,6 @@ public class DrawingView extends View implements GestureDetector.OnGestureListen
     public void setColor(int color) {
         iColor = color;
     }
-
 
     @Override
     protected void onDraw(Canvas canvas) {

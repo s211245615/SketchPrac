@@ -3,15 +3,16 @@ package s211245615.wrap302.sketchprac;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.RadioGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 
 import top.defaults.colorpicker.ColorPickerPopup;
 
@@ -41,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getSize(size);
         int x = size.x;
         int y = size.y;
-        int minSize = min(x,y);
+        int minSize = min(x, y);
 
-        drawingView.getLayoutParams().width = minSize-16;
-        drawingView.getLayoutParams().height = minSize-16;
+        drawingView.getLayoutParams().width = minSize - 32;
+        drawingView.getLayoutParams().height = minSize - 32;
 
     }
 
@@ -76,10 +77,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("drawings", drawingView.getDrawShapes());
+    }
 
     @Override
-    public void onRestoreInstanceState(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onRestoreInstanceState(savedInstanceState, persistentState);
+    protected void onRestoreInstanceState(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            super.onRestoreInstanceState(savedInstanceState);
+            drawingView.setDrawShapes((ArrayList<DrawShape>) savedInstanceState.getSerializable("drawings"));
+            drawingView.invalidate();
+        }
     }
 
     public void undoPress(View view) {
